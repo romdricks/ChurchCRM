@@ -331,9 +331,16 @@ function ChopLastCharacter($sText): string
     return mb_substr($sText, 0, strlen($sText) - 1);
 }
 
-function change_date_for_place_holder($string)
+function change_date_for_place_holder(string $string = null): string
 {
-    return ((strtotime($string) != "") ? date(SystemConfig::getValue("sDatePickerFormat"), strtotime($string)) : strtotime($string));
+    $string ??= '';
+    $timestamp = strtotime($string);
+
+    if ($timestamp !== false) {
+        return date(SystemConfig::getValue("sDatePickerFormat"), $timestamp);
+    }
+
+    return '';
 }
 
 function FormatDateOutput()
@@ -1093,11 +1100,8 @@ function validateCustomField($type, &$data, $col_Name, ?array &$aErrors): bool
     // Handler for 4-digit year
         case 6:
             if (strlen($data) != 0) {
-                if (!is_numeric($data) || strlen($data) != 4) {
+                if (!is_numeric($data) || strlen($data) != 4 || $data < 0) {
                     $aErrors[$col_Name] = gettext('Invalid Year');
-                    $bErrorFlag = true;
-                } elseif ($data > 2155 || $data < 1901) {
-                    $aErrors[$col_Name] = gettext('Out of range: Allowable values are 1901 to 2155');
                     $bErrorFlag = true;
                 }
             }

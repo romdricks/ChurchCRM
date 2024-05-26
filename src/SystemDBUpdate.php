@@ -14,7 +14,6 @@ require 'Include/Functions.php';
 
 if (Bootstrapper::isDBCurrent()) {
     RedirectUtils::redirect('v2/dashboard');
-    exit;
 }
 
 $logger = LoggerUtils::getAppLogger();
@@ -24,7 +23,6 @@ if (isset($_GET['upgrade']) && InputUtils::filterString($_GET['upgrade']) === "t
         UpgradeService::upgradeDatabaseVersion();
         $logger->info("Complete database upgrade; redirecting to Main menu");
         RedirectUtils::redirect('v2/dashboard');
-        exit;
     } catch (\Exception $ex) {
         $errorMessage = $ex->getMessage();
         $logger->error("Error updating database: " . $errorMessage, ['exception' => $ex]);
@@ -56,7 +54,7 @@ require 'Include/HeaderNotLoggedIn.php'; ?>
         ?>
         <div class="row center-block">
                 <p></br></p>
-                <form>
+                <form id="dbUpgradeForm">
                     <input type="hidden" name="upgrade" value="true"/>
                     <button type="submit" class="btn btn-primary btn-block btn-flat" id="upgradeDatabase"><i
                             class="fa fa-database"></i> <?= gettext('Upgrade database') ?></button>
@@ -73,6 +71,5 @@ require 'Include/HeaderNotLoggedIn.php'; ?>
         <?php
     } ?>
 </div>
-
 
 <?php require 'Include/FooterNotLoggedIn.php'; ?>

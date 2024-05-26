@@ -18,12 +18,13 @@ use ChurchCRM\Authentication\AuthenticationManager;
 use ChurchCRM\Bootstrapper;
 use ChurchCRM\dto\SystemConfig;
 use ChurchCRM\dto\SystemURLs;
-use ChurchCRM\Emails\NewPersonOrFamilyEmail;
+use ChurchCRM\Emails\notifications\NewPersonOrFamilyEmail;
 use ChurchCRM\model\ChurchCRM\FamilyQuery;
 use ChurchCRM\model\ChurchCRM\Note;
 use ChurchCRM\model\ChurchCRM\Person;
 use ChurchCRM\model\ChurchCRM\PersonQuery;
 use ChurchCRM\Utils\InputUtils;
+use ChurchCRM\Utils\MiscUtils;
 use ChurchCRM\Utils\RedirectUtils;
 
 //Set the page title
@@ -41,17 +42,14 @@ if (array_key_exists('FamilyID', $_GET)) {
 if ($iFamilyID > 0) {
     if (!(AuthenticationManager::getCurrentUser()->isEditRecordsEnabled() || (AuthenticationManager::getCurrentUser()->isEditSelfEnabled() && $iFamilyID == AuthenticationManager::getCurrentUser()->getPerson()->getFamId()))) {
         RedirectUtils::redirect('v2/dashboard');
-        exit;
     }
 
     $sSQL = 'SELECT fam_ID FROM family_fam WHERE fam_ID = ' . $iFamilyID;
     if (mysqli_num_rows(RunQuery($sSQL)) == 0) {
         RedirectUtils::redirect('v2/dashboard');
-        exit;
     }
 } elseif (!AuthenticationManager::getCurrentUser()->isAddRecordsEnabled()) {
     RedirectUtils::redirect('v2/dashboard');
-    exit;
 }
 
 // Get the lists of canvassers
@@ -150,6 +148,7 @@ if (isset($_POST['FamilySubmit']) || isset($_POST['FamilySubmitAndAdd'])) {
     }
 
     $iCanvasser = 0;
+    $bOkToCanvass = false;
     if (AuthenticationManager::getCurrentUser()->isCanvasserEnabled()) { // Only take modifications to this field if the current user is a canvasser
         $bOkToCanvass = isset($_POST['OkToCanvass']);
         if (array_key_exists('Canvasser', $_POST)) {
@@ -167,7 +166,7 @@ if (isset($_POST['FamilySubmit']) || isset($_POST['FamilySubmitAndAdd'])) {
     if (array_key_exists('PropertyID', $_POST)) {
         $iPropertyID = InputUtils::legacyFilterInput($_POST['PropertyID'], 'int');
     }
-    $dWeddingDate = InputUtils::legacyFilterInput($_POST['WeddingDate']);
+    $dWeddingDate = InputUtils::legacyFilterInput($_POST['WeddingDate'] ?? '');
 
     $bNoFormat_HomePhone = isset($_POST['NoFormat_HomePhone']);
     $bNoFormat_WorkPhone = isset($_POST['NoFormat_WorkPhone']);
@@ -205,8 +204,8 @@ if (isset($_POST['FamilySubmit']) || isset($_POST['FamilySubmitAndAdd'])) {
             $aBirthDateError[$iCount] = gettext('Invalid Birth Date: Missing birth month and day.');
             $bErrorFlag = true;
         } elseif ((strlen($aFirstNames[$iCount]) > 0) && (strlen($aBirthYears[$iCount]) > 0)) {
-            if (($aBirthYears[$iCount] > 2155) || ($aBirthYears[$iCount] < 1901)) {
-                $aBirthDateError[$iCount] = gettext('Invalid Year: allowable values are 1901 to 2155');
+            if ($aBirthYears[$iCount] < 0) {
+                $aBirthDateError[$iCount] = gettext('Invalid Year');
                 $bErrorFlag = true;
             } elseif ($aBirthMonths[$iCount] > 0 && $aBirthDays[$iCount] > 0) {
                 if (!checkdate($aBirthMonths[$iCount], $aBirthDays[$iCount], $aBirthYears[$iCount])) {
@@ -224,16 +223,13 @@ if (isset($_POST['FamilySubmit']) || isset($_POST['FamilySubmitAndAdd'])) {
     }
 
     // Validate Wedding Date if one was entered
-    $dWeddingDate = null;
-    if ((strlen($dWeddingDate) > 0) && ($dWeddingDate != '')) {
-        $dateString = parseAndValidateDate($dWeddingDate, Bootstrapper::getCurrentLocale()->getCountryCode(), $pasfut = 'past');
-        if ($dateString === false) {
-            $sWeddingDateError = '<span style="color: red; ">'
-                                . gettext('Not a valid Wedding Date') . '</span>';
-            $bErrorFlag = true;
-        } else {
-            $dWeddingDate = $dateString;
-        }
+    $dateString = parseAndValidateDate($dWeddingDate, Bootstrapper::getCurrentLocale()->getCountryCode(), $pasfut = 'past');
+    if ((strlen($dWeddingDate) > 0) && $dateString === false) {
+        $sWeddingDateError = '<span style="color: red; ">'
+                            . gettext('Not a valid Wedding Date') . '</span>';
+        $bErrorFlag = true;
+    } else {
+        $dWeddingDate = $dateString;
     }
 
     // Validate Email
@@ -276,75 +272,44 @@ if (isset($_POST['FamilySubmit']) || isset($_POST['FamilySubmitAndAdd'])) {
         $bSendNewsLetterString = $bSendNewsLetter ? 'TRUE' : 'FALSE';
         $bOkToCanvassString = $bOkToCanvass ? 'TRUE' : 'FALSE';
 
-        if ($iFamilyID < 1) {
-            $family = new \ChurchCRM\model\ChurchCRM\Family();
-            $family
-                ->setName($sName)
-                ->setAddress1($sAddress1)
-                ->setAddress2($sAddress2)
-                ->setCity($sCity)
-                ->setState($sState)
-                ->setZip($sZip)
-                ->setHomePhone($sHomePhone)
-                ->setWorkPhone($sWorkPhone)
-                ->setCellPhone($sCellPhone)
-                ->setDateEntered(date('YmdHis'))
-                ->setEnteredBy(AuthenticationManager::getCurrentUser()->getId())
-                ->setSendNewsletter($bSendNewsLetterString)
-                ->setOkToCanvass($bOkToCanvassString)
-                ->setCanvasser($iCanvasser)
-                ->setEnvelope($nEnvelope);
-            if ($dWeddingDate) {
-                $family->setWeddingdate($dWeddingDate);
-            }
-            if ($sEmail) {
-                $family->setEmail($sEmail);
-            }
-            if ($nLatitude) {
-                $family->setLatitude($nLatitude);
-            }
-            if ($nLatitude) {
-                $family->setLongitude($nLongitude);
-            }
-            $family->save();
-            $bGetKeyBack = true;
-        } else {
-            $sSQL = "UPDATE family_fam SET fam_Name='" . $sName . "'," .
-                        "fam_Address1='" . $sAddress1 . "'," .
-                        "fam_Address2='" . $sAddress2 . "'," .
-                        "fam_City='" . $sCity . "'," .
-                        "fam_State='" . $sState . "'," .
-                        "fam_Zip='" . $sZip . "'," .
-                        'fam_Latitude=' . ($nLatitude ? "\"$nLatitude\"" : 'NULL') . ',' .
-                        'fam_Longitude=' . ($nLongitude ? "\"$nLongitude\"" : 'NULL') . ',' .
-                        "fam_Country='" . $sCountry . "'," .
-                        "fam_HomePhone='" . $sHomePhone . "'," .
-                        "fam_WorkPhone='" . $sWorkPhone . "'," .
-                        "fam_CellPhone='" . $sCellPhone . "'," .
-                        "fam_Email='" . ($sEmail ?? '') . "'," .
-                        'fam_WeddingDate=' . ($dWeddingDate ? "\"$dWeddingDate\"" : 'NULL') . ',' .
-                        'fam_Envelope=' . $nEnvelope . ',' .
-                        "fam_DateLastEdited='" . date('YmdHis') . "'," .
-                        'fam_EditedBy = ' . AuthenticationManager::getCurrentUser()->getId() . ',' .
-                        'fam_SendNewsLetter = "' . $bSendNewsLetterString . '"';
-            if (AuthenticationManager::getCurrentUser()->isCanvasserEnabled()) {
-                $sSQL .= ', fam_OkToCanvass = "' . $bOkToCanvassString . '"' .
-                                    ", fam_Canvasser = '" . $iCanvasser . "'";
-            }
-            $sSQL .= ' WHERE fam_ID = ' . $iFamilyID;
-            $bGetKeyBack = false;
+        $family = new \ChurchCRM\model\ChurchCRM\Family();
+        if ($iFamilyID >= 1) {
+            $family = FamilyQuery::create()->findPk($iFamilyID);
         }
-
-        //Execute the SQL
-        RunQuery($sSQL);
+        $family
+            ->setName($sName)
+            ->setAddress1($sAddress1)
+            ->setAddress2($sAddress2)
+            ->setCity($sCity)
+            ->setState($sState)
+            ->setZip($sZip)
+            ->setHomePhone($sHomePhone)
+            ->setWorkPhone($sWorkPhone)
+            ->setCellPhone($sCellPhone)
+            ->setDateEntered(date('YmdHis'))
+            ->setEnteredBy(AuthenticationManager::getCurrentUser()->getId())
+            ->setSendNewsletter($bSendNewsLetterString)
+            ->setOkToCanvass($bOkToCanvassString)
+            ->setCanvasser($iCanvasser)
+            ->setEnvelope($nEnvelope);
+        if ($dWeddingDate) {
+            $family->setWeddingdate($dWeddingDate);
+        }
+        if ($sEmail) {
+            $family->setEmail($sEmail);
+        }
+        if ($nLatitude) {
+            $family->setLatitude($nLatitude);
+        }
+        if ($nLatitude) {
+            $family->setLongitude($nLongitude);
+        }
+        $family->save();
+        $family->reload();
 
         //If the user added a new record, we need to key back to the route to the FamilyView page
-        if ($bGetKeyBack) {
-            //Get the key back
-            $sSQL = 'SELECT MAX(fam_ID) AS iFamilyID FROM family_fam';
-            $rsLastEntry = RunQuery($sSQL);
-            extract(mysqli_fetch_array($rsLastEntry));
-
+        if ($iFamilyID < 1) {
+            $iFamilyID = $family->getId();
             $sSQL = "INSERT INTO `family_custom` (`fam_ID`) VALUES ('" . $iFamilyID . "')";
             RunQuery($sSQL);
 
@@ -563,6 +528,7 @@ if (isset($_POST['FamilySubmit']) || isset($_POST['FamilySubmitAndAdd'])) {
         $sCity = SystemConfig::getValue('sDefaultCity');
         $sCountry = SystemConfig::getValue('sDefaultCountry');
         $sState = SystemConfig::getValue('sDefaultState');
+        $sZip = SystemConfig::getValue('sDefaultZip');
         $iClassification = '0';
         $iFamilyMemberRows = 6;
         $bOkToCanvass = 1;
@@ -571,7 +537,6 @@ if (isset($_POST['FamilySubmit']) || isset($_POST['FamilySubmitAndAdd'])) {
         $sName = '';
         $sAddress1 = '';
         $sAddress2 = '';
-        $sZip = '';
         $sHomePhone = '';
         $bNoFormat_HomePhone = isset($_POST['NoFormat_HomePhone']);
         $sWorkPhone = '';

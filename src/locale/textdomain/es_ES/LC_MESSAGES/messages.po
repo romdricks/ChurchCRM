@@ -1268,10 +1268,6 @@ msgid "First name must be entered"
 msgstr "Debe ingresar el Nombre"
 
 #: 
-msgid "Invalid Year: allowable values are 1901 to 2155"
-msgstr "Año no válido: los valores permitidos son de 1901 a 2155"
-
-#: 
 msgid "Invalid Birth Date."
 msgstr "Fecha de Nacimiento Inválida"
 
@@ -3563,10 +3559,6 @@ msgid "Invalid Year"
 msgstr "Año Inválido"
 
 #: 
-msgid "Out of range: Allowable values are 1901 to 2155"
-msgstr "Fuera de rango: Valores permitidos entre 1901 y 2155"
-
-#: 
 msgid "Invalid Number"
 msgstr "Número inválido"
 
@@ -4347,8 +4339,9 @@ msgid "Anonymous"
 msgstr "Anónimo"
 
 #: 
-msgid "Attendees for Event ID:"
-msgstr "Asistentes para evento ID:"
+#, fuzzy
+msgid "Attendees for Event"
+msgstr "Asistentes para evento"
 
 #: 
 msgid "is not configured"
@@ -4661,7 +4654,7 @@ msgstr "Estos son los números de roles de familia designados como cabezas del h
 
 #: 
 msgid "These are the family role numbers designated as spouse"
-msgstr "Límite de tiempo de sesión en segundos\\rColocar en cero para deshabilitar límites de tiempo de sesión."
+msgstr "Estos son los números de rol familiar designados como cónyuge"
 
 #: 
 msgid "These are the family role numbers designated as child"
@@ -6995,11 +6988,8 @@ msgid "Person's Name"
 msgstr "Nombre de la persona"
 
 #: 
-msgid "Adult Name(Optional)"
-msgstr "Nombre de adulto (Opcional)"
-
-#: 
-msgid "Checked in By(Optional)"
+#, fuzzy
+msgid "Checked in By (Optional)"
 msgstr "Registrado por (Opcional)"
 
 #: 
@@ -7017,10 +7007,6 @@ msgstr "Borrar registro en Entrada"
 #: 
 msgid "Adult Checking Out Person"
 msgstr "Adulto Registrando Salida de persona"
-
-#: 
-msgid "Adult Name (Optional)"
-msgstr "Nombre de adulto (Opcional)"
 
 #: 
 msgid "Text before name in emails/reports"
@@ -7554,8 +7540,9 @@ msgid "Your Church's Facebook Page"
 msgstr "Página de Facebook de Su iglesia"
 
 #: 
-msgid "Your Church's Twitter Page"
-msgstr "Página de Twitter de Su iglesia"
+#, fuzzy
+msgid "Your Church's X Page"
+msgstr "Página de X de Su iglesia"
 
 #: 
 msgid "lookup user images on Google when no local image is present"
@@ -7876,18 +7863,6 @@ msgstr "O Cree un grupo y agregue al carrito en una acción"
 #: 
 msgid "Create Group + ADD Cart"
 msgstr "Crear grupo + agregar al carrito"
-
-#: 
-msgid "Facebook"
-msgstr "Facebook"
-
-#: 
-msgid "Twitter"
-msgstr "Twitter"
-
-#: 
-msgid "LinkedIn"
-msgstr "LinkedIn"
 
 #: 
 msgid "Move Event"
@@ -8335,8 +8310,9 @@ msgid "ChurchCRM Central Notifications URL"
 msgstr "URL Central de Notificaciones de ChurchCRM"
 
 #: 
-msgid "Follow us on Twitter"
-msgstr "Síganos en Twitter"
+#, fuzzy
+msgid "Follow us on"
+msgstr "Síganos en"
 
 #: 
 msgid "invalid event type id"
@@ -8517,8 +8493,9 @@ msgid "Records"
 msgstr "Registros"
 
 #: 
-msgid "Emptied into Event ID"
-msgstr "Vaciado hacia el ID del evento"
+#, fuzzy
+msgid "Emptied into Event"
+msgstr "Vaciado hacia el del evento"
 
 #: 
 msgid "integrityCheck.json file missing"
@@ -9265,14 +9242,6 @@ msgid "Help translate this project"
 msgstr "Ayudar a traducir este proyecto"
 
 #: 
-msgid "Credit Card People"
-msgstr "Personas de Tarjeta de Crédito"
-
-#: 
-msgid "People who are configured to pay by credit card."
-msgstr "Personas configuradas para pagar con tarjeta de crédito."
-
-#: 
 msgid "Afrikaans"
 msgstr "Afrikaans"
 
@@ -9463,4 +9432,12 @@ msgstr "Recibió este correo electrónico porque recibimos una solicitud de acti
 #: 
 msgid "To stop receiving these emails, you can email"
 msgstr "Para dejar de recibir estos correos, puede contactar a"
+
+#: 
+msgid "invalid group request"
+msgstr "Solicitud de grupo inválida"
+
+#: 
+msgid "Adult Name (Optional)"
+msgstr "Nombre de adulto (Opcional)"
 

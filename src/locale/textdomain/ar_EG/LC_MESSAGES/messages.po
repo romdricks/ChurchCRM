@@ -1267,10 +1267,6 @@ msgid "First name must be entered"
 msgstr "يجب ادخال الاسم الاول"
 
 #: 
-msgid "Invalid Year: allowable values are 1901 to 2155"
-msgstr "السنة غير صحيحة : القيمة المسموحة من 1901 حتى 2155"
-
-#: 
 msgid "Invalid Birth Date."
 msgstr "تاريخ الميلاد غير صحيح"
 
@@ -3562,10 +3558,6 @@ msgid "Invalid Year"
 msgstr "السنة غير صحيحة"
 
 #: 
-msgid "Out of range: Allowable values are 1901 to 2155"
-msgstr "خارج النطاق: القيم المسموح بها هي 1901-2155"
-
-#: 
 msgid "Invalid Number"
 msgstr "رقم غير صالح"
 
@@ -4348,7 +4340,8 @@ msgid "Anonymous"
 msgstr "مجهول"
 
 #: 
-msgid "Attendees for Event ID:"
+#, fuzzy
+msgid "Attendees for Event"
 msgstr "الحضور لمعرف الحدث:"
 
 #: 
@@ -6967,11 +6960,8 @@ msgid "Person's Name"
 msgstr "اسم الشخص"
 
 #: 
-msgid "Adult Name(Optional)"
-msgstr "اسم الكبار (اختياري)"
-
-#: 
-msgid "Checked in By(Optional)"
+#, fuzzy
+msgid "Checked in By (Optional)"
 msgstr "إيداعه بواسطة (اختياري)"
 
 #: 
@@ -6989,10 +6979,6 @@ msgstr "حذف الإيداع في الدخول"
 #: 
 msgid "Adult Checking Out Person"
 msgstr "الكبار فحص خارج شخص"
-
-#: 
-msgid "Adult Name (Optional)"
-msgstr "اسم الكبار (اختياري)"
 
 #: 
 msgid "Text before name in emails/reports"
@@ -7523,7 +7509,8 @@ msgid "Your Church's Facebook Page"
 msgstr "الكنيسة لديك صفحة الفيسبوك"
 
 #: 
-msgid "Your Church's Twitter Page"
+#, fuzzy
+msgid "Your Church's X Page"
 msgstr "كنيستك التغريد الصفحة"
 
 #: 
@@ -7845,18 +7832,6 @@ msgstr "أو إنشاء المجموعة وإضافة السلة في عمل و�
 #: 
 msgid "Create Group + ADD Cart"
 msgstr "إنشاء مجموعة + أضف العربة"
-
-#: 
-msgid "Facebook"
-msgstr "فيس بوك"
-
-#: 
-msgid "Twitter"
-msgstr "تويتر"
-
-#: 
-msgid "LinkedIn"
-msgstr "لينك دلن"
 
 #: 
 msgid "Move Event"
@@ -8304,7 +8279,8 @@ msgid "ChurchCRM Central Notifications URL"
 msgstr "ChurchCRM URL الإخطارات الوسطى"
 
 #: 
-msgid "Follow us on Twitter"
+#, fuzzy
+msgid "Follow us on"
 msgstr "تابعونا على تويتر"
 
 #: 
@@ -8484,7 +8460,8 @@ msgid "Records"
 msgstr "سجلات"
 
 #: 
-msgid "Emptied into Event ID"
+#, fuzzy
+msgid "Emptied into Event"
 msgstr "أفرغت إلى معرف الحدث"
 
 #: 
@@ -9227,14 +9204,6 @@ msgid "Help translate this project"
 msgstr "ساعد في ترجمة هذا المشروع"
 
 #: 
-msgid "Credit Card People"
-msgstr "الناس بطاقة الائتمان"
-
-#: 
-msgid "People who are configured to pay by credit card."
-msgstr "الأشخاص الذين تم تكوينهم للدفع بواسطة بطاقة الائتمان."
-
-#: 
 msgid "Afrikaans"
 msgstr "الأفريكانية"
 
@@ -9345,4 +9314,9 @@ msgstr "تاريخ ميلاد خطأ ، شهر الميلاد او اليوم غ
 #: 
 msgid "Invalid Birth Date: Missing birth month and day."
 msgstr "تاريخ ميلاد خطأ ، شهر الميلاد او اليوم غير صحيح."
+
+#: 
+#, fuzzy
+msgid "Adult Name (Optional)"
+msgstr "اسم الكبار (اختياري)"
 

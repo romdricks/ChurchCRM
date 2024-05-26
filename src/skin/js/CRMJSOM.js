@@ -439,7 +439,7 @@ window.CRM.groups = {
 
             $groupSelect2.on("select2:select", function (e) {
                 var targetGroupId = $(
-                    "#targetGroupSelection option:selected"
+                    "#targetGroupSelection option:selected",
                 ).val();
                 $parent = $("#targetRoleSelection").parent();
                 $("#targetRoleSelection").empty();
@@ -570,23 +570,31 @@ window.CRM.dashboard = {
             $("#translationInfo").html(
                 data.name + " [" + window.CRM.locale + "]",
             );
-            if (data.countryFlagCode !== "us" && data.poPerComplete < 90) {
+            if (data.displayPerCompleted && data.poPerComplete < 90) {
                 $("#translationPer").html(data.poPerComplete + "%");
                 $("#localePer").removeClass("hidden");
             }
         },
         SystemUpgrade: function (data) {
             if (data.newVersion) {
-                $("#upgradeToVersion").html(data.newVersion.MAJOR + "." + data.newVersion.MINOR + "." + data.newVersion.PATCH);
+                $("#upgradeToVersion").html(
+                    data.newVersion.MAJOR +
+                        "." +
+                        data.newVersion.MINOR +
+                        "." +
+                        data.newVersion.PATCH,
+                );
                 $("#systemUpdateMenuItem").removeClass("d-none");
             }
-        }
+        },
     },
     refresh: function () {
         window.CRM.APIRequest({
             method: "GET",
             path:
-                "background/page?name=" +
+                "background/page?token=" +
+                Math.random() +
+                "&name=" +
                 window.CRM.PageName.replace(window.CRM.root, ""),
             suppressErrorDialog: true,
         }).done(function (data) {

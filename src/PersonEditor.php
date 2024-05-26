@@ -17,7 +17,7 @@ use ChurchCRM\Authentication\AuthenticationManager;
 use ChurchCRM\dto\Photo;
 use ChurchCRM\dto\SystemConfig;
 use ChurchCRM\dto\SystemURLs;
-use ChurchCRM\Emails\NewPersonOrFamilyEmail;
+use ChurchCRM\Emails\notifications\NewPersonOrFamilyEmail;
 use ChurchCRM\model\ChurchCRM\Note;
 use ChurchCRM\model\ChurchCRM\PersonCustom;
 use ChurchCRM\model\ChurchCRM\PersonQuery;
@@ -50,7 +50,6 @@ if ($iPersonID > 0) {
 
     if (mysqli_num_rows($rsPerson) == 0) {
         RedirectUtils::redirect('v2/dashboard');
-        exit;
     }
 
     if (
@@ -61,11 +60,9 @@ if ($iPersonID > 0) {
         )
     ) {
         RedirectUtils::redirect('v2/dashboard');
-        exit;
     }
 } elseif (!AuthenticationManager::getCurrentUser()->isAddRecordsEnabled()) {
     RedirectUtils::redirect('v2/dashboard');
-    exit;
 }
 // Get Field Security List Matrix
 $sSQL = 'SELECT * FROM list_lst WHERE lst_ID = 5 ORDER BY lst_OptionSequence';
@@ -221,8 +218,8 @@ if (isset($_POST['PersonSubmit']) || isset($_POST['PersonSubmitAndAdd'])) {
     } elseif (strlen($iBirthYear) > 0) {
         if ($iBirthYear == 0) { // If zero set to NULL
             $iBirthYear = null;
-        } elseif ($iBirthYear > 2155 || $iBirthYear < 1901) {
-            $sBirthYearError = gettext('Invalid Year: allowable values are 1901 to 2155');
+        } elseif ($iBirthYear < 0) {
+            $sBirthYearError = gettext('Invalid Year');
             $bErrorFlag = true;
         } elseif ($iBirthMonth > 0 && $iBirthDay > 0) {
             if (!checkdate($iBirthMonth, $iBirthDay, $iBirthYear)) {
@@ -553,7 +550,7 @@ if (isset($_POST['PersonSubmit']) || isset($_POST['PersonSubmitAndAdd'])) {
         $sAddress2 = '';
         $sCity = SystemConfig::getValue('sDefaultCity');
         $sState = SystemConfig::getValue('sDefaultState');
-        $sZip = '';
+        $sZip = SystemConfig::getValue('sDefaultZip');
         $sCountry = SystemConfig::getValue('sDefaultCountry');
         $sHomePhone = '';
         $sWorkPhone = '';
@@ -1085,9 +1082,9 @@ require 'Include/Header.php';
                     <label for="Facebook">
                         <?php
                         if ($bFacebook) {
-                            echo '<span style="color: red;">' . gettext('Facebook') . ':</span></td>';
+                            echo '<span style="color: red;">Facebook:</span></td>';
                         } else {
-                            echo gettext('Facebook') . ':</td>';
+                            echo 'Facebook:</td>';
                         }
                         ?>
                     </label>
@@ -1104,10 +1101,10 @@ require 'Include/Header.php';
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="Twitter"><?= gettext('Twitter') ?>:</label>
+                    <label for="Twitter">X:</label>
                     <div class="input-group">
                         <div class="input-group-addon">
-                            <i class="fa-brands fa-twitter"></i>
+                            <i class="fa-brands fa-x-twitter"></i>
                         </div>
                         <input type="text" name="Twitter"
                                value="<?= htmlentities(stripslashes($sTwitter), ENT_NOQUOTES, 'UTF-8') ?>" size="30"
@@ -1118,7 +1115,7 @@ require 'Include/Header.php';
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                      <label for="LinkedIn"><?= gettext('LinkedIn') ?>:</label>
+                      <label for="LinkedIn">LinkedIn:</label>
                       <div class="input-group">
                           <div class="input-group-addon">
                               <i class="fa-brands fa-linkedin"></i>

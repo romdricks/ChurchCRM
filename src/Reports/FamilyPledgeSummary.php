@@ -1,14 +1,5 @@
 <?php
 
-/*******************************************************************************
-*
-*  filename    : Reports/FamilyPledgeSummary.php
-*  last change : 2005-03-26
-*  description : Creates a PDF summary of pledge status by family
-*  Copyright 2004-2009  Michael Wilt
-
-******************************************************************************/
-
 namespace ChurchCRM\Reports;
 
 require '../Include/Config.php';
@@ -53,12 +44,13 @@ if (!empty($_POST['classList'])) {
     }
 }
 
-//Get the Fiscal Year ID out of the querystring
+// Get the Fiscal Year ID out of the query string
 $iFYID = InputUtils::legacyFilterInput($_POST['FYID'], 'int');
 if (!$iFYID) {
     $iFYID = CurrentFY();
 }
-$_SESSION['idefaultFY'] = $iFYID; // Remember the chosen FYID
+// Remember the chosen Fiscal Year ID
+$_SESSION['idefaultFY'] = $iFYID;
 $output = InputUtils::legacyFilterInput($_POST['output']);
 $pledge_filter = '';
 if (array_key_exists('pledge_filter', $_POST)) {
@@ -72,7 +64,6 @@ if (array_key_exists('only_owe', $_POST)) {
 // If CSVAdminOnly option is enabled and user is not admin, redirect to the menu.
 if (!AuthenticationManager::getCurrentUser()->isAdmin() && SystemConfig::getValue('bCSVAdminOnly')) {
     RedirectUtils::redirect('v2/dashboard');
-    exit;
 }
 
 // Get all the families
@@ -174,7 +165,6 @@ while ($row = mysqli_fetch_array($rsFunds)) {
 }
 
 // Create PDF Report
-// *****************
 class PdfFamilyPledgeSummaryReport extends ChurchInfoReport
 {
     // Constructor
@@ -342,14 +332,14 @@ while ($aFam = mysqli_fetch_array($rsFamilies)) {
                     $y = $pageTop;
                 }
             }
-            $fundPledgeTotal[$fun_name] = 0; // Clear the array for the next person
+            // Clear the array for the next person
+            $fundPledgeTotal[$fun_name] = 0;
             $fundPaymentTotal[$fun_name] = 0;
         }
     }
 }
 
-header('Pragma: public');  // Needed for IE when using a shared SSL certificate
-if (SystemConfig::getValue('iPDFOutputType') == 1) {
+if ((int) SystemConfig::getValue('iPDFOutputType') === 1) {
     $pdf->Output('FamilyPledgeSummary' . date(SystemConfig::getValue('sDateFilenameFormat')) . '.pdf', 'D');
 } else {
     $pdf->Output();

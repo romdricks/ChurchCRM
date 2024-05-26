@@ -6,7 +6,7 @@ use ChurchCRM\Authentication\AuthenticationManager;
 use ChurchCRM\dto\Photo;
 use ChurchCRM\dto\SystemConfig;
 use ChurchCRM\dto\SystemURLs;
-use ChurchCRM\Emails\NewPersonOrFamilyEmail;
+use ChurchCRM\Emails\notifications\NewPersonOrFamilyEmail;
 use ChurchCRM\model\ChurchCRM\Base\Person as BasePerson;
 use ChurchCRM\PhotoInterface;
 use ChurchCRM\Service\GroupService;
@@ -573,11 +573,8 @@ class Person extends BasePerson implements PhotoInterface
     /**
      * @return string[]
      */
-    public function getCustomFields(): array
+    public function getCustomFields($allPersonCustomFields, $customMapping, &$CustomList, $name_func): array
     {
-        // get list of custom field column names
-        $allPersonCustomFields = PersonCustomMasterQuery::create()->find();
-
         // add custom fields to person_custom table since they are not defined in the propel schema
         $rawQry = PersonCustomQuery::create();
         foreach ($allPersonCustomFields as $customfield) {
@@ -587,14 +584,22 @@ class Person extends BasePerson implements PhotoInterface
         }
         $thisPersonCustomFields = $rawQry->findOneByPerId($this->getId());
 
+
         // get custom column names and values
         $personCustom = [];
-        if ($rawQry->count() > 0) {
-            foreach ($allPersonCustomFields as $customfield) {
-                if (AuthenticationManager::getCurrentUser()->isEnabledSecurity($customfield->getFieldSecurity())) {
-                    $value = $thisPersonCustomFields->getVirtualColumn($customfield->getId());
-                    if (!empty($value)) {
-                        $personCustom[] = $customfield->getName();
+        if ($thisPersonCustomFields) {
+            //Lets use the map created instead of querying the column name
+            foreach ($thisPersonCustomFields->getVirtualColumns() as $column => $value) {
+                if (!empty($value)) {
+                    $temp = $customMapping[$column]['Name'];
+                    $personCustom[] = $temp;
+                    $CustomList[$temp] += 1;
+
+
+                    if (array_key_exists($value, $customMapping[$column]['Elements'])) {
+                        $temp = $name_func($customMapping[$column]['Name'], $customMapping[$column]['Elements'][$value]);
+                        $personCustom[] = $temp;
+                        $CustomList[$temp] += 1;
                     }
                 }
             }
@@ -635,7 +640,7 @@ class Person extends BasePerson implements PhotoInterface
         parent::postSave($con);
     }
 
-    public function getAge(?\DateTimeInterface $now = null): ?string
+    public function getAge(?string $date = null): ?string
     {
         if ($this->getBirthYear() === null) {
             return null;
@@ -646,9 +651,7 @@ class Person extends BasePerson implements PhotoInterface
         if (!$birthDate instanceof \DateTimeImmutable || $this->hideAge()) {
             return false;
         }
-        if (!$now instanceof \DateTimeInterface) {
-            $now = new \DateTimeImmutable('today');
-        }
+        $now = $date == null ? new \DateTimeImmutable('today') : \DateTimeImmutable::createFromFormat('Y-m-d', $date);
         $age = date_diff($now, $birthDate);
 
         if ($age->y < 1) {

@@ -16,7 +16,7 @@ require '../Include/Functions.php';
 
 use ChurchCRM\dto\SystemConfig;
 use ChurchCRM\dto\SystemURLs;
-use ChurchCRM\Emails\FamilyVerificationEmail;
+use ChurchCRM\Emails\verify\FamilyVerificationEmail;
 use ChurchCRM\Utils\InputUtils;
 use ChurchCRM\Utils\LoggerUtils;
 use ChurchCRM\Utils\RedirectUtils;
@@ -321,8 +321,6 @@ while ($aFam = mysqli_fetch_array($rsFamilies)) {
     $pdf->finishPage($curY);
 
     if (!empty($emaillist)) {
-        header('Pragma: public');  // Needed for IE when using a shared SSL certificate
-
         $doc = $pdf->Output('ConfirmReportEmail-' . $fam_ID . '-' . date(SystemConfig::getValue('sDateFilenameFormat')) . '.pdf', 'S');
 
         $subject = $fam_Name . ' Family Information Review';

@@ -1,13 +1,5 @@
 <?php
 
-/*******************************************************************************
-*
-*  filename    : Reports/ConfimLabels.php
-*  last change : 2003-08-30
-*  description : Creates a PDF with all the mailing labels for the confirm data letter
-
-******************************************************************************/
-
 require '../Include/Config.php';
 require '../Include/Functions.php';
 
@@ -57,8 +49,7 @@ foreach ($families as $family) {
     $pdf->addPdfLabel($labelText);
 }
 
-header('Pragma: public');  // Needed for IE when using a shared SSL certificate
-if ($iPDFOutputType == 1) {
+if ((int) SystemConfig::getValue('iPDFOutputType') === 1) {
     $pdf->Output('ConfirmDataLabels' . date(SystemConfig::getValue('sDateFilenameFormat')) . '.pdf', 'D');
 } else {
     $pdf->Output();

@@ -10,7 +10,7 @@ msgstr ""
 "#-#-#-#-#  messages.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-07 17:49-0800\n"
+"POT-Creation-Date: 2024-05-04 11:46-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,8 +25,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-03-08T01:49:27.531Z\n"
-"PO-Revision-Date: 2024-03-08T01:49:27.532Z\n"
+"POT-Creation-Date: 2024-05-04T18:47:02.460Z\n"
+"PO-Revision-Date: 2024-05-04T18:47:02.461Z\n"
 "Language: en\n"
 
 msgid "Backup Database"
@@ -561,10 +561,10 @@ msgstr ""
 msgid "Person's Name"
 msgstr ""
 
-msgid "Adult Name(Optional)"
+msgid "Adult Name (Optional)"
 msgstr ""
 
-msgid "Checked in By(Optional)"
+msgid "Checked in By (Optional)"
 msgstr ""
 
 msgid "CheckIn"
@@ -583,9 +583,6 @@ msgid "Delete Checkin in Entry"
 msgstr ""
 
 msgid "Adult Checking Out Person"
-msgstr ""
-
-msgid "Adult Name (Optional)"
 msgstr ""
 
 msgid "CheckOut"
@@ -871,12 +868,6 @@ msgstr ""
 msgid "New Password"
 msgstr ""
 
-msgid "Password Changed"
-msgstr ""
-
-msgid "Your ChurchCRM password was changed"
-msgstr ""
-
 msgid "Password Reset"
 msgstr ""
 
@@ -1060,9 +1051,6 @@ msgid "Anniversary"
 msgstr ""
 
 msgid "Birthdays"
-msgstr ""
-
-msgid "Birthday"
 msgstr ""
 
 msgid "Holidays"
@@ -1503,7 +1491,7 @@ msgstr ""
 msgid "Your Church's Facebook Page"
 msgstr ""
 
-msgid "Your Church's Twitter Page"
+msgid "Your Church's X Page"
 msgstr ""
 
 msgid "lookup user images on Google when no local image is present"
@@ -1685,6 +1673,9 @@ msgid "Send an email notifying users when their account has been deleted"
 msgstr ""
 
 msgid "Google Maps API Key used for rendering maps in browser"
+msgstr ""
+
+msgid "Default Zip"
 msgstr ""
 
 msgid "Church Information"
@@ -2052,6 +2043,9 @@ msgstr ""
 msgid "Information to Include"
 msgstr ""
 
+msgid "Birthday"
+msgstr ""
+
 msgid "Family Home Phone"
 msgstr ""
 
@@ -2188,7 +2182,7 @@ msgstr ""
 msgid "Church Event Editor"
 msgstr ""
 
-msgid "Attendees for Event ID:"
+msgid "Attendees for Event"
 msgstr ""
 
 msgid "Are you sure you want to DELETE this person from Event ID: "
@@ -2477,7 +2471,7 @@ msgstr ""
 msgid "Invalid Birth Date: Missing birth month and day."
 msgstr ""
 
-msgid "Invalid Year: allowable values are 1901 to 2155"
+msgid "Invalid Year"
 msgstr ""
 
 msgid "Invalid Birth Date."
@@ -3218,7 +3212,7 @@ msgstr ""
 msgid "All rights reserved"
 msgstr ""
 
-msgid "Follow us on Twitter"
+msgid "Follow us on"
 msgstr ""
 
 msgid "You have"
@@ -3318,12 +3312,6 @@ msgid "Fall"
 msgstr ""
 
 msgid "Error: Invalid Editor ID!"
-msgstr ""
-
-msgid "Invalid Year"
-msgstr ""
-
-msgid "Out of range: Allowable values are 1901 to 2155"
 msgstr ""
 
 msgid "Invalid Number"
@@ -3839,15 +3827,6 @@ msgid "Create a new family (using last name)"
 msgstr ""
 
 msgid "None State"
-msgstr ""
-
-msgid "Facebook"
-msgstr ""
-
-msgid "Twitter"
-msgstr ""
-
-msgid "LinkedIn"
 msgstr ""
 
 msgid "Membership Info"
@@ -5405,7 +5384,7 @@ msgstr ""
 msgid "Records"
 msgstr ""
 
-msgid "Emptied into Event ID"
+msgid "Emptied into Event"
 msgstr ""
 
 msgid "Back to Menu"
@@ -6866,6 +6845,9 @@ msgstr ""
 msgid "Hebrew"
 msgstr ""
 
+msgid "Hindi - India"
+msgstr ""
+
 msgid "Hungarian"
 msgstr ""
 
@@ -6873,6 +6855,9 @@ msgid "Indonesian - Indonesia"
 msgstr ""
 
 msgid "Italian - Italy"
+msgstr ""
+
+msgid "Japanese"
 msgstr ""
 
 msgid "Norwegian"
@@ -6897,6 +6882,9 @@ msgid "Spanish - Spain"
 msgstr ""
 
 msgid "Sami (Northern) (Sweden)"
+msgstr ""
+
+msgid "Tamil - India"
 msgstr ""
 
 msgid "Thai"
@@ -7162,6 +7150,9 @@ msgstr ""
 msgid "Not all members of this group are in the cart"
 msgstr ""
 
+msgid "Not Subscribed"
+msgstr ""
+
 msgid "Not Subscribed "
 msgstr ""
 
@@ -7205,6 +7196,9 @@ msgid "Please store these recovery codes in a safe location"
 msgstr ""
 
 msgid "Pledge or Payment"
+msgstr ""
+
+msgid "property"
 msgstr ""
 
 msgid ""

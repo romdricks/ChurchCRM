@@ -1303,10 +1303,6 @@ msgid "First name must be entered"
 msgstr "必须输入名字"
 
 #: 
-msgid "Invalid Year: allowable values are 1901 to 2155"
-msgstr "无效的年份：允许值是1901到2155"
-
-#: 
 msgid "Invalid Birth Date."
 msgstr "无效的出生日期。"
 
@@ -3657,10 +3653,6 @@ msgid "Invalid Year"
 msgstr "无效的年份"
 
 #: 
-msgid "Out of range: Allowable values are 1901 to 2155"
-msgstr "超出范围：允许的值是1901到2155"
-
-#: 
 msgid "Invalid Number"
 msgstr "无效的号码"
 
@@ -4457,8 +4449,9 @@ msgid "Anonymous"
 msgstr "匿名"
 
 #: 
-msgid "Attendees for Event ID:"
-msgstr "活动ID：的与会者"
+#, fuzzy
+msgid "Attendees for Event"
+msgstr "活动 的与会者"
 
 #: 
 msgid "is not configured"
@@ -7076,11 +7069,8 @@ msgid "Person's Name"
 msgstr "会员名称"
 
 #: 
-msgid "Adult Name(Optional)"
-msgstr "Adult Name(可选)"
-
-#: 
-msgid "Checked in By(Optional)"
+#, fuzzy
+msgid "Checked in By (Optional)"
 msgstr "签到名(可选)"
 
 #: 
@@ -7098,10 +7088,6 @@ msgstr "删除条目中的签到"
 #: 
 msgid "Adult Checking Out Person"
 msgstr "成人结帐人"
-
-#: 
-msgid "Adult Name (Optional)"
-msgstr "Adult Name(可选)"
 
 #: 
 msgid "Text before name in emails/reports"
@@ -7632,10 +7618,6 @@ msgid "Your Church's Facebook Page"
 msgstr "您的教会的Facebook页面"
 
 #: 
-msgid "Your Church's Twitter Page"
-msgstr "您的会的Facebook页面"
-
-#: 
 msgid "lookup user images on Google when no local image is present"
 msgstr "当没有本地图像时，在谷歌上查找用户图像"
 
@@ -7956,18 +7938,6 @@ msgstr "或创建一个组并在一个动作中添加购物车"
 msgid "Create Group + ADD Cart"
 msgstr "建立群组＋新增购物车\n"
 ""
-
-#: 
-msgid "Facebook"
-msgstr "Facebook"
-
-#: 
-msgid "Twitter"
-msgstr "Twitter"
-
-#: 
-msgid "LinkedIn"
-msgstr "LinkedIn"
 
 #: 
 msgid "Move Event"
@@ -8416,7 +8386,8 @@ msgid "ChurchCRM Central Notifications URL"
 msgstr "ChurchCRM中央通知URL"
 
 #: 
-msgid "Follow us on Twitter"
+#, fuzzy
+msgid "Follow us on"
 msgstr "在推特上关注我们"
 
 #: 
@@ -8596,7 +8567,8 @@ msgid "Records"
 msgstr "记录"
 
 #: 
-msgid "Emptied into Event ID"
+#, fuzzy
+msgid "Emptied into Event"
 msgstr "嵌入事件ID"
 
 #: 
@@ -9338,14 +9310,6 @@ msgid "Help translate this project"
 msgstr "帮助翻译这个项目"
 
 #: 
-msgid "Credit Card People"
-msgstr "信用卡人"
-
-#: 
-msgid "People who are configured to pay by credit card."
-msgstr "配置为通过信用卡付款的人。"
-
-#: 
 msgid "Afrikaans"
 msgstr "南非语"
 
@@ -9444,4 +9408,8 @@ msgstr "区域设置"
 #: 
 msgid "Override system locale"
 msgstr "覆盖系统区域设置"
+
+#: 
+msgid "Adult Name (Optional)"
+msgstr "Adult Name(可选)"
 

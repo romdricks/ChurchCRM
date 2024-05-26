@@ -1,13 +1,5 @@
 <?php
 
-/*******************************************************************************
-*
-*  filename    : Reports/TaxReport.php
-*  last change : 2005-03-26
-*  description : Creates a PDF with all the tax letters for a particular calendar year.
-
-******************************************************************************/
-
 namespace ChurchCRM\Reports;
 
 require '../Include/Config.php';
@@ -34,7 +26,6 @@ $iMinimum = InputUtils::legacyFilterInput($_POST['minimum'], 'int');
 // If CSVAdminOnly option is enabled and user is not admin, redirect to the menu.
 if (!AuthenticationManager::getCurrentUser()->isAdmin() && SystemConfig::getValue('bCSVAdminOnly') && $output != 'pdf') {
     RedirectUtils::redirect('v2/dashboard');
-    exit;
 }
 
 if (!empty($_POST['classList'])) {
@@ -67,14 +58,12 @@ if (!empty($_POST['classList'])) {
         $notInClassList .= ')';
     }
 
-    // all classes were selected. this should behave as if no filter classes were specified
+    // All classes were selected. this should behave as if no filter classes were specified
     if ($notInClassList === '()') {
         unset($classList);
     }
 }
 
-// Build SQL Query
-// Build SELECT SQL Portion
 $sSQL = 'SELECT fam_ID, fam_Name, fam_Address1, fam_Address2, fam_City, fam_State, fam_Zip, fam_Country, fam_envelope, plg_date, plg_amount, plg_method, plg_comment, plg_CheckNo, fun_Name, plg_PledgeOrPayment, plg_NonDeductible FROM family_fam
 	INNER JOIN pledge_plg ON fam_ID=plg_FamID
 	LEFT JOIN donationfund_fun ON plg_fundID=fun_ID';
@@ -123,6 +112,7 @@ if (!empty($_POST['funds'])) {
         $sSQL .= ') ';
     }
 }
+
 // Filter by Family
 if (!empty($_POST['family'])) {
     $count = 0;
@@ -154,7 +144,6 @@ preg_match('/WHERE (plg_PledgeOrPayment.*)/i', $sSQL, $aSQLCriteria);
 // Add SQL ORDER
 $sSQL .= ' ORDER BY plg_FamID, plg_date ';
 
-//Execute SQL Statement
 $rsReport = RunQuery($sSQL);
 
 // Exit if no rows returned
@@ -164,8 +153,6 @@ if ($iCountRows < 1) {
 }
 
 // Create Giving Report -- PDF
-// ***************************
-
 if ($output === 'pdf') {
     // Set up bottom border values
     if ($remittance === 'yes') {
@@ -371,7 +358,6 @@ if ($output === 'pdf') {
             $pdf->Cell(40, $summaryIntervalY, 'Fund');
             $pdf->Cell(40, $summaryIntervalY, 'Memo');
             $pdf->Cell(25, $summaryIntervalY, 'Amount', 0, 1, 'R');
-            //$curY = $pdf->GetY();
             $totalAmount = 0;
             $totalNonDeductible = 0;
             $currentFamilyID = $fam_ID;
@@ -472,15 +458,13 @@ if ($output === 'pdf') {
         );
     }
 
-    header('Pragma: public');  // Needed for IE when using a shared SSL certificate
-    if (SystemConfig::getValue('iPDFOutputType') == 1) {
+    if ((int) SystemConfig::getValue('iPDFOutputType') === 1) {
         $pdf->Output('TaxReport' . date(SystemConfig::getValue('sDateFilenameFormat')) . '.pdf', 'D');
     } else {
         $pdf->Output();
     }
 
 // Output a text file
-// ##################
 } elseif ($output === 'csv') {
     // Settings
     $delimiter = ',';
@@ -496,10 +480,10 @@ if ($output === 'pdf') {
     // Remove trailing delimiter and add eol
     $buffer = mb_substr($buffer, 0, -1) . $eol;
 
-    // Add data
     while ($row = mysqli_fetch_row($rsReport)) {
         foreach ($row as $field) {
-            $field = str_replace($delimiter, ' ', $field);    // Remove any delimiters from data
+            // Remove any delimiters from data
+            $field = str_replace($delimiter, ' ', $field);
             $buffer .= $field . $delimiter;
         }
         // Remove trailing delimiter and add eol
