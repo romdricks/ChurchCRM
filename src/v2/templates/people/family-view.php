@@ -6,7 +6,6 @@ use ChurchCRM\dto\SystemConfig;
 use ChurchCRM\dto\SystemURLs;
 use ChurchCRM\Service\MailChimpService;
 
-//Set the page title
 $sPageTitle =  $family->getName() . " - " . gettext("Family");
 include SystemURLs::getDocumentRoot() . '/Include/Header.php';
 
@@ -27,7 +26,6 @@ if (array_key_exists('idefaultFY', $_SESSION)) {
     window.CRM.currentFamilyView = 2;
     window.CRM.plugin.mailchimp = <?= $mailchimp->isActive() ? "true" : "false" ?>;
 </script>
-
 
 <div id="family-deactivated" class="alert alert-warning d-none">
     <strong><?= gettext("This Family is Deactivated") ?> </strong>
@@ -114,11 +112,6 @@ if (array_key_exists('idefaultFY', $_SESSION)) {
                         } ?>
                         <a class="btn btn-app" id="AddFamilyToCart" data-familyid="<?= $family->getId() ?>"> <i
                                 class="fa fa-cart-plus"></i> <?= gettext("Add All Family Members to Cart") ?></a>
-                        <?php if (AuthenticationManager::getCurrentUser()->isCanvasserEnabled()) { ?>
-                            <a class="btn btn-app" href="<?= SystemURLs::getRootPath()?>/CanvassEditor.php?FamilyID=<?= $family->getId() ?>&FYID=<?= $iFYID ?>&linkBack=v2/family/<?= $family->getId() ?>">
-                                <i class="fas fa-refresh"></i><?= $iFYID . gettext(" Canvass Entry") ?></a>
-                        <?php } ?>
-
                         <?php if (AuthenticationManager::getCurrentUser()->isFinanceEnabled()) { ?>
                             <a class="btn btn-app"
                                href="<?= SystemURLs::getRootPath()?>/PledgeEditor.php?FamilyID=<?= $family->getId() ?>&amp;linkBack=v2/family/<?= $family->getId() ?>&PledgeOrPayment=Pledge">
@@ -445,8 +438,6 @@ if (array_key_exists('idefaultFY', $_SESSION)) {
                                         <pre><?= $item['text'] ?></pre>
                                     </div>
 
-
-
                                 <?php } ?>
                             </div>
                         </div>
@@ -488,12 +479,8 @@ if (array_key_exists('idefaultFY', $_SESSION)) {
     </div>
 </div>
 
-
-
-
 <script src="<?= SystemURLs::getRootPath() ?>/skin/js/MemberView.js"></script>
 <script src="<?= SystemURLs::getRootPath() ?>/skin/js/FamilyView.js"></script>
-
 
 <!-- Photos start -->
 <div id="photoUploader"></div>
@@ -514,7 +501,6 @@ if (array_key_exists('idefaultFY', $_SESSION)) {
 
                 <p><?= gettext("Do you want to proceed?") ?></p>
             </div>
-
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-default"
@@ -587,5 +573,5 @@ if (array_key_exists('idefaultFY', $_SESSION)) {
         </div>
     </div>
 </div>
-
-<?php include SystemURLs::getDocumentRoot() . '/Include/Footer.php'; ?>
+<?php
+include SystemURLs::getDocumentRoot() . '/Include/Footer.php';

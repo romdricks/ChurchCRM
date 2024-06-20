@@ -11,41 +11,11 @@ CREATE TABLE `version_ver` (
   UNIQUE KEY `ver_version` (`ver_version`)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci  AUTO_INCREMENT=1 ;
 
-
--- --------------------------------------------------------
-
---
--- Table structure for table `canvassdata_can`
---
-
-CREATE TABLE `canvassdata_can` (
-  `can_ID` mediumint(9) unsigned NOT NULL auto_increment,
-  `can_famID` mediumint(9) NOT NULL default '0',
-  `can_Canvasser` mediumint(9) NOT NULL default '0',
-  `can_FYID` mediumint(9) default NULL,
-  `can_date` date default NULL,
-  `can_Positive` text,
-  `can_Critical` text,
-  `can_Insightful` text,
-  `can_Financial` text,
-  `can_Suggestion` text,
-  `can_NotInterested` tinyint(1) NOT NULL default '0',
-  `can_WhyNotInterested` text,
-  PRIMARY KEY  (`can_ID`)
-) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `canvassdata_can`
---
-
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `config_cfg`
 --
-
-
 
 CREATE TABLE `config_cfg` (
   `cfg_id` int(11) NOT NULL default '0',
@@ -72,7 +42,6 @@ CREATE TABLE `deposit_dep` (
 --
 -- Dumping data for table `deposit_dep`
 --
-
 
 -- --------------------------------------------------------
 
@@ -114,7 +83,6 @@ CREATE TABLE `email_message_pending_emp` (
 -- Dumping data for table `email_message_pending_emp`
 --
 
-
 -- --------------------------------------------------------
 
 --
@@ -132,7 +100,6 @@ CREATE TABLE `email_recipient_pending_erp` (
 --
 -- Dumping data for table `email_recipient_pending_erp`
 --
-
 
 -- --------------------------------------------------------
 
@@ -180,7 +147,6 @@ CREATE TABLE `eventcounts_evtcnt` (
 -- Dumping data for table `eventcounts_evtcnt`
 --
 
-
 -- --------------------------------------------------------
 
 --
@@ -206,7 +172,6 @@ CREATE TABLE `events_event` (
 --
 -- Dumping data for table `events_event`
 --
-
 
 -- --------------------------------------------------------
 
@@ -240,7 +205,6 @@ CREATE TABLE `event_attend` (
 -- Dumping data for table `event_attend`
 --
 
-
 -- --------------------------------------------------------
 
 --
@@ -270,7 +234,6 @@ INSERT INTO `event_types` (`type_id`, `type_name`, `type_defstarttime`, `type_de
   (2, 'Sunday School', '09:30:00', 'weekly', 'Sunday', '', '2016-01-01', 1);
 
 -- --------------------------------------------------------
-
 
 CREATE TABLE `calendars` (
   `calendar_id` INT NOT NULL auto_increment,
@@ -306,7 +269,6 @@ CREATE TABLE `family_custom` (
 -- Dumping data for table `family_custom`
 --
 
-
 -- --------------------------------------------------------
 
 --
@@ -325,7 +287,6 @@ CREATE TABLE `family_custom_master` (
 --
 -- Dumping data for table `family_custom_master`
 --
-
 
 -- --------------------------------------------------------
 
@@ -355,8 +316,6 @@ CREATE TABLE `family_fam` (
   `fam_scanCredit` text,
   `fam_SendNewsLetter` enum('FALSE','TRUE') NOT NULL default 'FALSE',
   `fam_DateDeactivated` date default NULL,
-  `fam_OkToCanvass` enum('FALSE','TRUE') NOT NULL default 'FALSE',
-  `fam_Canvasser` smallint(5) unsigned NOT NULL default '0',
   `fam_Latitude` double default NULL,
   `fam_Longitude` double default NULL,
   `fam_Envelope` mediumint(9) NOT NULL default '0',
@@ -366,7 +325,6 @@ CREATE TABLE `family_fam` (
 --
 -- Dumping data for table `family_fam`
 --
-
 
 -- --------------------------------------------------------
 
@@ -388,7 +346,6 @@ CREATE TABLE `groupprop_master` (
 --
 -- Dumping data for table `groupprop_master`
 --
-
 
 -- --------------------------------------------------------
 
@@ -412,7 +369,6 @@ CREATE TABLE `group_grp` (
 --
 -- Dumping data for table `group_grp`
 --
-
 
 -- --------------------------------------------------------
 
@@ -444,7 +400,6 @@ CREATE TABLE `istlookup_lu` (
 --
 -- Dumping data for table `istlookup_lu`
 --
-
 
 -- --------------------------------------------------------
 
@@ -498,7 +453,6 @@ INSERT INTO `list_lst` (`lst_ID`, `lst_OptionID`, `lst_OptionSequence`, `lst_Opt
   (5, 7, 7, 'bManageGroups'),
   (5, 8, 8, 'bFinance'),
   (5, 9, 9, 'bNotes'),
-  (5, 11, 11, 'bCanvasser'),
   (10, 1, 1, 'Teacher'),
   (10, 2, 2, 'Student'),
   (11, 1, 1, 'Member'),
@@ -529,7 +483,6 @@ CREATE TABLE `note_nte` (
 -- Dumping data for table `note_nte`
 --
 
-
 -- --------------------------------------------------------
 
 --
@@ -548,7 +501,6 @@ CREATE TABLE `person2group2role_p2g2r` (
 -- Dumping data for table `person2group2role_p2g2r`
 --
 
-
 -- --------------------------------------------------------
 
 --
@@ -566,7 +518,6 @@ CREATE TABLE `person2volunteeropp_p2vo` (
 -- Dumping data for table `person2volunteeropp_p2vo`
 --
 
-
 -- --------------------------------------------------------
 
 --
@@ -581,7 +532,6 @@ CREATE TABLE `person_custom` (
 --
 -- Dumping data for table `person_custom`
 --
-
 
 -- --------------------------------------------------------
 
@@ -602,7 +552,6 @@ CREATE TABLE `person_custom_master` (
 --
 -- Dumping data for table `person_custom_master`
 --
-
 
 -- --------------------------------------------------------
 
@@ -690,7 +639,6 @@ CREATE TABLE `pledge_plg` (
 --
 -- Dumping data for table `pledge_plg`
 --
-
 
 -- --------------------------------------------------------
 
@@ -926,7 +874,6 @@ INSERT INTO `query_qry` (`qry_ID`, `qry_SQL`, `qry_Name`, `qry_Description`, `qr
   (24, 'SELECT per_ID as AddToCart, CONCAT(''<a href=PersonView.php?PersonID='',per_ID,''>'',per_FirstName,'' '',per_LastName,''</a>'') AS Name FROM person_per WHERE per_cls_id =1', 'Select all members', 'People who are members', 0),
   (25, 'SELECT per_ID as AddToCart, CONCAT(''<a href=PersonView.php?PersonID='',per_ID,''>'',per_FirstName,'' '',per_LastName,''</a>'') AS Name FROM person_per LEFT JOIN person2volunteeropp_p2vo ON per_id = p2vo_per_ID WHERE p2vo_vol_ID = ~volopp~ ORDER BY per_LastName', 'Volunteers', 'Find volunteers for a particular opportunity', 1),
   (26, 'SELECT per_ID as AddToCart, CONCAT(per_FirstName,'' '',per_LastName) AS Name FROM person_per WHERE DATE_SUB(NOW(),INTERVAL ~friendmonths~ MONTH)<per_FriendDate ORDER BY per_MembershipDate', 'Recent friends', 'Friends who signed up in previous months', 0),
-  (27, 'SELECT per_ID as AddToCart, CONCAT(per_FirstName,'' '',per_LastName) AS Name FROM person_per inner join family_fam on per_fam_ID=fam_ID where per_fmr_ID<>3 AND fam_OkToCanvass="TRUE" ORDER BY fam_Zip', 'Families to Canvass', 'People in families that are ok to canvass.', 0),
   (28, 'SELECT fam_Name, a.plg_amount as PlgFY1, b.plg_amount as PlgFY2 from family_fam left join pledge_plg a on a.plg_famID = fam_ID and a.plg_FYID=~fyid1~ and a.plg_PledgeOrPayment=''Pledge'' left join pledge_plg b on b.plg_famID = fam_ID and b.plg_FYID=~fyid2~ and b.plg_PledgeOrPayment=''Pledge'' order by fam_Name', 'Pledge comparison', 'Compare pledges between two fiscal years', 1),
   (30, 'SELECT per_ID as AddToCart, CONCAT(per_FirstName,'' '',per_LastName) AS Name, fam_address1, fam_city, fam_state, fam_zip FROM person_per join family_fam on per_fam_id=fam_id where per_fmr_id<>3 and per_fam_id in (select fam_id from family_fam inner join pledge_plg a on a.plg_famID=fam_ID and a.plg_FYID=~fyid1~ and a.plg_amount>0) and per_fam_id not in (select fam_id from family_fam inner join pledge_plg b on b.plg_famID=fam_ID and b.plg_FYID=~fyid2~ and b.plg_amount>0)', 'Missing pledges', 'Find people who pledged one year but not another', 1),
   (32, 'SELECT fam_Name, fam_Envelope, b.fun_Name as Fund_Name, a.plg_amount as Pledge from family_fam left join pledge_plg a on a.plg_famID = fam_ID and a.plg_FYID=~fyid~ and a.plg_PledgeOrPayment=\'Pledge\' and a.plg_amount>0 join donationfund_fun b on b.fun_ID = a.plg_fundID order by fam_Name, a.plg_fundID', 'Family Pledge by Fiscal Year', 'Pledge summary by family name for each fund for the selected fiscal year', 1),
@@ -949,7 +896,6 @@ CREATE TABLE `record2property_r2p` (
 --
 -- Dumping data for table `record2property_r2p`
 --
-
 
 -- --------------------------------------------------------
 
@@ -980,7 +926,6 @@ CREATE TABLE `result_res` (
 --
 -- Dumping data for table `result_res`
 --
-
 
 -- --------------------------------------------------------
 
@@ -1015,7 +960,6 @@ INSERT INTO `userconfig_ucfg` (`ucfg_per_id`, `ucfg_id`, `ucfg_name`, `ucfg_valu
   (1, 1, 'sMailtoDelimiter', ',', 'text', 'user permission to send email via mailto: links', 'TRUE', ''),
   (1, 5, 'bCreateDirectory', '1', 'boolean', 'User permission to create directories', 'TRUE', ''),
   (1, 6, 'bExportCSV', '1', 'boolean', 'User permission to export CSV files', 'TRUE', '');
-
 
 -- --------------------------------------------------------
 
@@ -1059,7 +1003,6 @@ CREATE TABLE `user_usr` (
   `usr_CalNoSchool7` date default NULL,
   `usr_CalNoSchool8` date default NULL,
   `usr_SearchFamily` tinyint(3) default NULL,
-  `usr_Canvasser` tinyint(1) NOT NULL default '0',
   `usr_TwoFactorAuthSecret` VARCHAR(255) NULL,
   `usr_TwoFactorAuthLastKeyTimestamp` INT NULL,
   `usr_TwoFactorAuthRecoveryCodes` TEXT NULL,
@@ -1078,11 +1021,9 @@ INSERT INTO `user_usr` (`usr_per_ID`, `usr_Password`, `usr_NeedPasswordChange`, 
                         `usr_SearchLimit`, `usr_Style`, `usr_showPledges`,
                         `usr_showPayments`, `usr_showSince`, `usr_defaultFY`, `usr_currentDeposit`, `usr_UserName`, `usr_EditSelf`,
                         `usr_CalStart`, `usr_CalEnd`, `usr_CalNoSchool1`, `usr_CalNoSchool2`, `usr_CalNoSchool3`, `usr_CalNoSchool4`,
-                        `usr_CalNoSchool5`, `usr_CalNoSchool6`, `usr_CalNoSchool7`, `usr_CalNoSchool8`, `usr_SearchFamily`,
-                        `usr_Canvasser`)
+                        `usr_CalNoSchool5`, `usr_CalNoSchool6`, `usr_CalNoSchool7`, `usr_CalNoSchool8`, `usr_SearchFamily`)
 VALUES
-  (1, '4bdf3fba58c956fc3991a1fde84929223f968e2853de596e49ae80a91499609b', 1, '2016-01-01 00:00:00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 10, 'skin-red', 0, 0, '2016-01-01', 10, 0, 'Admin', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
-
+  (1, '4bdf3fba58c956fc3991a1fde84929223f968e2853de596e49ae80a91499609b', 1, '2016-01-01 00:00:00', 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 10, 'skin-red', 0, 0, '2016-01-01', 10, 0, 'Admin', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0);
 
 --
 -- Table structure for table `user_settings`
@@ -1104,7 +1045,6 @@ CREATE TABLE `user_settings` (
 ALTER TABLE `user_settings`
   ADD PRIMARY KEY (`user_id`,`setting_name`);
 
-
 -- --------------------------------------------------------
 
 --
@@ -1123,7 +1063,6 @@ CREATE TABLE `volunteeropportunity_vol` (
 --
 -- Dumping data for table `volunteeropportunity_vol`
 --
-
 
 -- --------------------------------------------------------
 
@@ -1222,8 +1161,6 @@ CREATE TABLE `kioskassginment_kasm` (
   UNIQUE KEY `kasm_ID` (`kasm_ID`)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
-
-
 CREATE TABLE `tokens` (
   `token` VARCHAR(99) NOT NULL,
   `type` VARCHAR(50) NOT NULL,
@@ -1247,7 +1184,6 @@ CREATE TABLE `locations` (
   `location_timzezone` VARCHAR(45) NULL,
   PRIMARY KEY (`location_id`)
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-
 
 CREATE TABLE `church_location_person` (
   `location_id` INT NOT NULL,
@@ -1302,7 +1238,6 @@ INSERT INTO `permissions` (`permission_id`, `permission_name`, `permission_desc`
 (9, 'crudDonations', 'Manage Donations'),
 (10, 'curdFinance', 'Manage Finance'),
 (11, 'curdNotes', 'Manage Notes'),
-(12, 'canvasser', 'Canvasser volunteer'),
 (13, 'editSelf', 'Edit own family only'),
 (14, 'emailMailto', 'Allow to see Mailto Links'),
 (15, 'createDirectory', 'Create Directories'),

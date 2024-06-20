@@ -159,10 +159,6 @@
         <column name="fam_SendNewsLetter" phpName="SendNewsletter" type="CHAR" sqlType="enum('FALSE','TRUE')"
                 required="true" defaultValue="FALSE"/>
         <column name="fam_DateDeactivated" phpName="DateDeactivated" type="DATE"/>
-        <column name="fam_OkToCanvass" phpName="OkToCanvass" type="CHAR" sqlType="enum('FALSE','TRUE')" required="true"
-                defaultValue="FALSE"/>
-        <column name="fam_Canvasser" phpName="Canvasser" type="SMALLINT" size="5" sqlType="smallint(5) unsigned"
-                required="true" defaultValue="0"/>
         <column name="fam_Latitude" phpName="Latitude" type="DOUBLE"/>
         <column name="fam_Longitude" phpName="Longitude" type="DOUBLE"/>
         <column name="fam_Envelope" phpName="Envelope" type="SMALLINT" size="9" required="true" defaultValue="0"/>
@@ -312,28 +308,6 @@
         </vendor>
     </table>
 
-    <table name="canvassdata_can" idMethod="native" phpName="CanvassData" description="this contains information about the results of canvassing families">
-        <column name="can_ID" phpName="Id" type="SMALLINT" size="9" sqlType="mediumint(9) unsigned" primaryKey="true"
-                autoIncrement="true" required="true"/>
-        <column name="can_famID" phpName="FamilyId" type="SMALLINT" size="9" required="true" defaultValue="0"/>
-        <column name="can_Canvasser" phpName="Canvasser" type="SMALLINT" size="9" required="true" defaultValue="0"/>
-        <column name="can_FYID" phpName="Fyid" type="SMALLINT" size="9"/>
-        <column name="can_date" phpName="Date" type="DATE"/>
-        <column name="can_Positive" phpName="Positive" type="LONGVARCHAR"/>
-        <column name="can_Critical" phpName="Critical" type="LONGVARCHAR"/>
-        <column name="can_Insightful" phpName="Insightful" type="LONGVARCHAR"/>
-        <column name="can_Financial" phpName="Financial" type="LONGVARCHAR"/>
-        <column name="can_Suggestion" phpName="Suggestion" type="LONGVARCHAR"/>
-        <column name="can_NotInterested" phpName="NotInterested" type="BOOLEAN" size="1" required="true"
-                defaultValue="false"/>
-        <column name="can_WhyNotInterested" phpName="WhyNotInterested" type="LONGVARCHAR"/>
-        <unique name="can_ID">
-            <unique-column name="can_ID"/>
-        </unique>
-        <vendor type="mysql">
-            <parameter name="Engine" value="InnoDB"/>
-        </vendor>
-    </table>
     <table name="deposit_dep" idMethod="native" phpName="Deposit" description="This records deposits / payments">
         <column name="dep_ID" phpName="Id" type="SMALLINT" size="9" sqlType="mediumint(9) unsigned" primaryKey="true"
                 autoIncrement="true" required="true"/>
@@ -632,7 +606,6 @@
         <column name="usr_CalNoSchool7" phpName="CalNoSchool7" type="DATE"/>
         <column name="usr_CalNoSchool8" phpName="CalNoSchool8" type="DATE"/>
         <column name="usr_SearchFamily" phpName="Searchfamily" type="TINYINT" size="3"/>
-        <column name="usr_Canvasser" phpName="Canvasser" type="BOOLEAN" size="1" required="true" defaultValue="0"/>
         <index name="usr_per_ID">
             <index-column name="usr_per_ID"/>
         </index>
@@ -649,7 +622,6 @@
             <parameter name="Engine" value="InnoDB"/>
         </vendor>
     </table>
-
 
     <table name="userconfig_ucfg" idMethod="native" phpName="UserConfig">
         <column name="ucfg_per_id" phpName="PeronId" type="SMALLINT" size="9" sqlType="mediumint(9) unsigned" primaryKey="true" required="true"/>
@@ -683,7 +655,6 @@
             <parameter name="Engine" value="InnoDB"/>
         </vendor>
     </table>
-
 
     <table name="volunteeropportunity_vol" idMethod="native" phpName="VolunteerOpportunity" description="This contains the names and descriptions of volunteer opportunities">
         <column name="vol_ID" phpName="Id" type="INTEGER" size="3" primaryKey="true" autoIncrement="true" required="true"/>
@@ -742,7 +713,6 @@
       </index>
      </table>
 
-
     <table name="kioskassginment_kasm" idMethod="native" phpName="KioskAssignment">
       <column name="kasm_ID" phpName="Id" type="INTEGER" size="9" sqlType="mediumint(9) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
       <column name="kasm_kdevId" phpName="KioskId" type="INTEGER" size="9" />
@@ -760,8 +730,6 @@
         <reference local="kasm_EventId" foreign="event_id"/>
       </foreign-key>
      </table>
-
-
 
     <table name="tokens" idMethod="native" phpName="Token">
         <column name="token" phpName="Token" type="VARCHAR" primaryKey="true" required="true"/>
@@ -866,7 +834,6 @@
         <column name="location_phone" type="VARCHAR" size="45" required="true" defaultValue=""/>
         <column name="location_email" type="VARCHAR" size="45" required="true" defaultValue=""/>
         <column name="location_timzezone" type="VARCHAR" size="45" required="true" defaultValue="" />
-
 
         <vendor type="mysql">
             <parameter name="Engine" value="InnoDB"/>
@@ -983,9 +950,6 @@
      <parameter name="Engine" value="InnoDB"/>
    </vendor>
  </table>
-
-
-
 
  <table name="queryparameteroptions_qpo" idMethod="native" phpName="QueryparameteroptionsQpo" description="Defines the values for the parameters for each query">
    <column name="qpo_ID" phpName="QpoId" type="SMALLINT" size="5" sqlType="smallint(5) unsigned" primaryKey="true" autoIncrement="true" required="true"/>

@@ -1,24 +1,5 @@
 <?php
 
-/*******************************************************************************
- *
- *  filename    : UserEditor.php
- *  description : form for adding and editing users
- *
- *  https://churchcrm.io/
- *  Copyright 2001-2002 Phillip Hullquist, Deane Barker
- *
- *  Updated 2005-03-19 by Everette L Mills: Updated to remove error that could be created
- *  by use of duplicate usernames
- *
- *  Additional Contributors:
- *  2006 Ed Davis
- *
-
-
- ******************************************************************************/
-
-// Include the function library
 require 'Include/Config.php';
 require 'Include/Functions.php';
 
@@ -59,7 +40,7 @@ if (isset($_GET['ErrorText'])) {
     $sErrorText = '';
 }
 
-//Value to help determine correct return state on error
+// Value to help determine correct return state on error
 if (isset($_POST['NewUser'])) {
     $NewUser = InputUtils::legacyFilterInput($_POST['NewUser'], 'string');
 }
@@ -121,11 +102,6 @@ if (isset($_POST['save']) && $iPersonID > 0) {
         } else {
             $EditSelf = 0;
         }
-        if (isset($_POST['Canvasser'])) {
-            $Canvasser = 1;
-        } else {
-            $Canvasser = 0;
-        }
 
         if (isset($_POST['Admin'])) {
             $Admin = 1;
@@ -146,7 +122,7 @@ if (isset($_POST['save']) && $iPersonID > 0) {
                 if ($undupCount == 0) {
                     $rawPassword = User::randomPassword();
                     $sPasswordHashSha256 = hash('sha256', $rawPassword . $iPersonID);
-                    $sSQL = 'INSERT INTO user_usr (usr_per_ID, usr_Password, usr_NeedPasswordChange, usr_LastLogin, usr_AddRecords, usr_EditRecords, usr_DeleteRecords, usr_MenuOptions, usr_ManageGroups, usr_Finance, usr_Notes, usr_Admin, usr_Style, usr_SearchLimit, usr_defaultFY, usr_UserName, usr_EditSelf, usr_Canvasser) VALUES (' . $iPersonID . ",'" . $sPasswordHashSha256 . "',1,'" . date('Y-m-d H:i:s') . "', " . $AddRecords . ', ' . $EditRecords . ', ' . $DeleteRecords . ', ' . $MenuOptions . ', ' . $ManageGroups . ', ' . $Finance . ', ' . $Notes . ', ' . $Admin . ", '" . $Style . "', 10," . $defaultFY . ',"' . $sUserName . '",' . $EditSelf . ',' . $Canvasser . ')';
+                    $sSQL = 'INSERT INTO user_usr (usr_per_ID, usr_Password, usr_NeedPasswordChange, usr_LastLogin, usr_AddRecords, usr_EditRecords, usr_DeleteRecords, usr_MenuOptions, usr_ManageGroups, usr_Finance, usr_Notes, usr_Admin, usr_Style, usr_SearchLimit, usr_defaultFY, usr_UserName, usr_EditSelf) VALUES (' . $iPersonID . ",'" . $sPasswordHashSha256 . "',1,'" . date('Y-m-d H:i:s') . "', " . $AddRecords . ', ' . $EditRecords . ', ' . $DeleteRecords . ', ' . $MenuOptions . ', ' . $ManageGroups . ', ' . $Finance . ', ' . $Notes . ', ' . $Admin . ", '" . $Style . "', 10," . $defaultFY . ',"' . $sUserName . '",' . $EditSelf . ')';
                     // Execute the SQL
                     RunQuery($sSQL);
                     $newUser = UserQuery::create()->findPk($iPersonID);
@@ -171,8 +147,7 @@ if (isset($_POST['save']) && $iPersonID > 0) {
                         ->setAdmin($Admin)
                         ->setUserStyle($Style)
                         ->setUserName($sUserName)
-                        ->setEditSelf($EditSelf)
-                        ->setCanvasser($Canvasser);
+                        ->setEditSelf($EditSelf);
                     $user->save();
                     $user->reload();
 
@@ -218,7 +193,6 @@ if (isset($_POST['save']) && $iPersonID > 0) {
             $usr_Notes = 0;
             $usr_Admin = 0;
             $usr_EditSelf = 1;
-            $usr_Canvasser = 0;
             $usr_Style = '';
         }
 
@@ -236,7 +210,6 @@ if (isset($_POST['save']) && $iPersonID > 0) {
         $usr_Notes = 0;
         $usr_Admin = 0;
         $usr_EditSelf = 1;
-        $usr_Canvasser = 0;
         $sUserName = '';
         $usr_Style = '';
         $vNewUser = 'true';
@@ -336,7 +309,6 @@ if (isset($_POST['save']) && ($iPersonID > 0)) {
     RedirectUtils::redirect('UserList.php');
 }
 
-// Set the page title and include HTML header
 $sPageTitle = gettext('User Editor');
 require 'Include/Header.php';
 
@@ -460,12 +432,6 @@ require 'Include/Header.php';
                                                                             } ?>>&nbsp;<span class="SmallText"><?= gettext('(Edit own family only.)') ?></span></td>
                     </tr>
                     <tr>
-                        <td><?= gettext('Canvasser') ?>:</td>
-                        <td><input type="checkbox" name="Canvasser" value="1"<?php if ($usr_Canvasser) {
-                            echo ' checked';
-                                                                             } ?>>&nbsp;<span class="SmallText"><?= gettext('(Canvass volunteer.)') ?></span></td>
-                    </tr>
-                    <tr>
                         <td><?= gettext('Style') ?>:</td>
                         <td class="TextColumnWithBottomBorder"><select
                                 name="Style"><?php StyleSheetOptions($usr_Style); ?></select></td>
@@ -497,7 +463,6 @@ require 'Include/Header.php';
                     <th><?= gettext('Notes') ?></th>
                 </tr>
                 <?php
-
 
                 //First get default settings, then overwrite with settings from this user
 
@@ -592,5 +557,5 @@ require 'Include/Header.php';
         $("#personSelect").select2();
     });
 </script>
-
-<?php require 'Include/Footer.php' ?>
+<?php
+require 'Include/Footer.php';
