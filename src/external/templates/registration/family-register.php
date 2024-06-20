@@ -219,4 +219,3 @@ if (!empty($sHeader)) {
 
 <?php
 require(SystemURLs::getDocumentRoot() . "/Include/FooterNotLoggedIn.php");
-?>
